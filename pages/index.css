@@ -23,6 +23,13 @@
   margin: auto;
 }
 
+@media screen and (max-width: 890px) {
+  .header {
+    margin-left: 19px;
+    margin-right: 19px;
+  }
+}
+
 .header__logo {
   background-image: url(../images/logo.svg);
   width: 142px;
@@ -32,6 +39,13 @@
 .content {
   max-width: 880px;
   margin: auto;
+}
+
+@media screen and (max-width: 890px) {
+  .content {
+    margin-left: 19px;
+    margin-right: 19px;
+  }
 }
 
 .profile {
@@ -105,4 +119,76 @@
 
 .profile__add-button:hover {
   opacity: 0.6;
+}
+
+.elements {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
+  row-gap: 20px;
+  column-gap: 17px;
+  justify-items: center;
+  padding-top: 51px;
+}
+
+.element {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.element__description {
+  display: flex;
+  justify-content: space-between;
+  background-color: #FFFFFF;
+  align-items: baseline;
+  padding: 0 20px;
+}
+
+.element__name {
+  font-size: 24px;
+  line-height: 29px;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0;
+  padding: 25px 0 31px;
+  color: #000000;
+  max-width: 195px;
+}
+
+.element__like-button {
+  background-image: url(../images/like-button.svg);
+  background-position: center;
+  background-color: #FFFFFF;
+  width: 22px;
+  height: 19px;
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s linear;
+}
+
+.element__like-button:hover {
+  opacity: 0.5;
+}
+
+.footer {
+  padding-top: 67px;
+  padding-bottom: 60px;
+  max-width: 880px;
+  margin: auto;
+}
+
+@media screen and (max-width: 890px) {
+  .footer {
+    margin-left: 19px;
+    margin-right: 19px;
+  }
+}
+
+.footer__copyright {
+  font-size: 18px;
+  line-height: 22px;
+  color: #545454;
+  margin: 0;
 }
