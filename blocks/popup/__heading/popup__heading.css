@@ -4,6 +4,12 @@
   font-weight: 900;
   color: #000000;
   margin: 0;
-  padding-top: 34px;
   align-self: flex-start;
+}
+
+@media screen and (max-width: 700px) {
+  .popup__heading {
+    font-size: 18px;
+    line-height: 22px;
+  }
 }

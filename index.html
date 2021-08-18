@@ -69,12 +69,15 @@
       </section>
       <div class="popup">
         <form class="popup__container">
+          <button class="popup__close-button"></button>
           <h3 class="popup__heading">Редактировать профиль</h3>
           <fieldset class="popup__name">
-            <input type="text" id="first-name">
+            <input type="text" id="first-name" name="first-name" placeholder="Жак-Ив Кусто"
+            class="popup__field">
           </fieldset>
           <fieldset class="popup__about-me">
-            <input type="text" id="first-name">
+            <input type="text" id="about-me" name="about-me" placeholder="Исследователь океана"
+            class="popup__field">
           </fieldset>
           <button class="popup__submit-button">Сохранить</button>
         </form>
