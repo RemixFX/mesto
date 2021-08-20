@@ -4,10 +4,13 @@
 
 <br>
 <br>
+</br>
+Одностраничный сайт-визитка с использованием:
+
+<div><img src="https://image.flaticon.com/icons/png/512/1197/1197498.png" width="40px">
+ & <img src="https://image.flaticon.com/icons/png/512/461/461042.png" alt="css" width="40px"> 
+ & <img src="https://image.flaticon.com/icons/png/512/617/617463.png" width="43px"></div>
 <br>
-Одностраничный сайт-визитка с использованием
-<img src="https://image.flaticon.com/icons/png/512/1197/1197498.png" width="40px">
-& <img src="https://image.flaticon.com/icons/png/512/461/461042.png" alt="css" width="40px"> & <img src="https://image.flaticon.com/icons/png/512/617/617463.png" width="43px">
 
 * Адаптирован под все разрешения экрана от 320px
 * Реализация "popup"-формы с помощью JavaScript
