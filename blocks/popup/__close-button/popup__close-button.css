@@ -8,7 +8,7 @@
   border: none;
   position: absolute;
   top: -40px;
-  left: 438px;
+  right: -40px;
   padding: 0;
   transition: opacity 0.2s linear;
 }
@@ -22,6 +22,6 @@
     width: 20px;
     height: 20px;
     top: -37px;
-    left: 262px;
+    right: 0;
   }
 }
