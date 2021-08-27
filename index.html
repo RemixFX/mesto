@@ -26,48 +26,15 @@
         <button class="profile__add-button" type="button"></button>
       </section>
       <section class="elements">
-        <article class="element">
-          <img class="element__image" src="./images/kislovodsk.jpg" alt="вид на лес с высокой горы">
-          <div class="element__description">
-            <h2 class="element__name">Кисловодск</h2>
-            <button class="element__like-button" type="button"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img class="element__image" src="./images/elbrus.jpg" alt="закат на фоне горы">
-          <div class="element__description">
-            <h2 class="element__name">Гора Эльбрус</h2>
-            <button class="element__like-button" type="button"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img class="element__image" src="./images/dombay.png" alt="горная местность с деревьями">
-          <div class="element__description">
-            <h2 class="element__name">Добмай</h2>
-            <button class="element__like-button" type="button"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img class="element__image" src="./images/pyatigorsk.jpg" alt="озеро окружённое деревьями">
-          <div class="element__description">
-            <h2 class="element__name">Пятигорск</h2>
-            <button class="element__like-button" type="button"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img class="element__image" src="./images/sochi.jpg" alt="вид с верха на побережье моря">
-          <div class="element__description">
-            <h2 class="element__name">Сочи</h2>
-            <button class="element__like-button" type="button"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img class="element__image" src="./images/karachaevsk.jpg" alt="заросшее сооружение на фоне горы">
-          <div class="element__description">
-            <h2 class="element__name">Карачаево-Черкесия</h2>
-            <button class="element__like-button" type="button"></button>
-          </div>
-        </article>
+        <template id="elements-template">
+          <article class="element">
+            <img class="element__image" src="" alt="">
+            <div class="element__description">
+              <h2 class="element__name"></h2>
+              <button class="element__like-button" type="button"></button>
+            </div>
+          </article>
+        </template>
       </section>
     </main>
     <footer class="footer">
@@ -80,11 +47,26 @@
         <form class="form">
           <fieldset class="form__field">
             <input type="text" autocomplete="off" name="first-name" value="Жак-Ив Кусто"
-               class="form__input form__input_type_name">
+              class="form__input form__input_type_name">
             <input type="text" autocomplete="off" name="job" value="Исследователь океана"
               class="form__input form__input_type_job">
           </fieldset>
           <button class="form__submit-button" autofocus type="submit">Сохранить</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup_type_add-card">
+      <div class="popup__container">
+        <button class="popup__close-button popup__close-button_type_add-card" type="button"></button>
+        <h3 class="popup__heading">Новое место</h3>
+        <form class="form">
+          <fieldset class="form__field">
+            <input type="text" autocomplete="off" name="name" placeholder="Название"
+              class="form__input form__input_type_name-card">
+            <input type="text" autocomplete="off" name="link" placeholder="Ссылка на картинку"
+              class="form__input form__input_type_link">
+          </fieldset>
+          <button class="form__submit-button" autofocus type="submit">Создать</button>
         </form>
       </div>
     </div>
