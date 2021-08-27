@@ -7,9 +7,10 @@
   padding: 0;
   cursor: pointer;
   border: none;
-  transition: opacity 0.1s linear;
+  transition: all 0.1s linear;
 }
 
 .element__like-button:hover {
   opacity: 0.5;
+  transform: scale(1.1);
 }

@@ -28,11 +28,10 @@ popupMenuButton.addEventListener('click', toggleForm);
 popupCloseButton.addEventListener('click', toggleForm);
 formElement.addEventListener('submit', formSubmitHandler);
 
-//1. Шесть карточек «из коробки»
+// Шесть карточек «из коробки»
 
 const elementsContainer = document.querySelector('.elements');
 const elementsTemplate = document.querySelector('#elements-template').content;
-//const addLike = elementsContainer.querySelector('.element__like-button');
 const initialCards = [
   {
     name: 'Архыз',
@@ -66,24 +65,30 @@ const initialCards = [
   }
 ];
 
-// единая функция добавления карточек + Лайк карточки
+//  Лайк карточки
+
+const addLike = evt => evt.target.classList.toggle('element__like-button_type_active');
+
+// Удаление карточки
+
+const removeCard = evt => evt.target.closest('.element').remove();
+
+// главная функция добавления карточек
 
 const AddCard = (element) => {
   const card = elementsTemplate.querySelector('.element').cloneNode(true);
 
-  card.querySelector('.element__like-button').addEventListener('click', function(evt) {
-    evt.target.classList.toggle('element__like-button_type_active');
-  });
   card.querySelector('.element__image').src = element.link;
   card.querySelector('.element__image').alt = element.alt;
   card.querySelector('.element__name').textContent = element.name;
+  card.querySelector('.element__delete-button').addEventListener('click', removeCard);
+  card.querySelector('.element__like-button').addEventListener('click', addLike);
   elementsContainer.prepend(card);
 };
 
-
 initialCards.forEach(element => AddCard(element));
 
-//2. Форма добавления карточки
+// Форма добавления карточки
 
 const popupMenuAddCard =  document.querySelector('.popup_type_add-card');
 const AddCardButton = document.querySelector('.profile__add-button');
@@ -96,7 +101,7 @@ function toggleFormAddCard() {
 AddCardButton.addEventListener('click', toggleFormAddCard);
 AddCardCloseButton.addEventListener('click', toggleFormAddCard);
 
-//3. Добавление карточки
+// Добавление карточки
 
 const formAddCard =  popupMenuAddCard.querySelector('.form');
 const nameCardInput = popupMenuAddCard.querySelector('.form__input_type_name-card');
