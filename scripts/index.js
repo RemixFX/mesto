@@ -32,8 +32,7 @@ formElement.addEventListener('submit', formSubmitHandler);
 
 const elementsContainer = document.querySelector('.elements');
 const elementsTemplate = document.querySelector('#elements-template').content;
-//const linkCard = document.querySelector('.element__image').src;
-//const nameCard = document.querySelector('.element__name').textContent;
+//const addLike = elementsContainer.querySelector('.element__like-button');
 const initialCards = [
   {
     name: 'Архыз',
@@ -67,11 +66,14 @@ const initialCards = [
   }
 ];
 
-// единая функция добавления карточек
+// единая функция добавления карточек + Лайк карточки
 
 const AddCard = (element) => {
   const card = elementsTemplate.querySelector('.element').cloneNode(true);
 
+  card.querySelector('.element__like-button').addEventListener('click', function(evt) {
+    evt.target.classList.toggle('element__like-button_type_active');
+  });
   card.querySelector('.element__image').src = element.link;
   card.querySelector('.element__image').alt = element.alt;
   card.querySelector('.element__name').textContent = element.name;
@@ -111,3 +113,5 @@ function addCardSubmitHandler(evt) {
 };
 
 formAddCard.addEventListener('submit', addCardSubmitHandler);
+
+
