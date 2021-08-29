@@ -1,10 +1,9 @@
 # Проект: Место
+<br>  
 
-<img src="./images/logo.svg" alt="html" width="520px">
+![alt логотип](/images/logo.svg)
 
-<br>
-<br>
-</br>
+
 Одностраничный сайт-визитка с использованием:
 
 <div><img src="https://image.flaticon.com/icons/png/512/1197/1197498.png" width="40px">
