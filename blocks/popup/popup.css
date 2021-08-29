@@ -5,5 +5,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  display: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.25s linear;
 }

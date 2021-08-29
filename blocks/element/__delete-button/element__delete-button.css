@@ -15,3 +15,7 @@
 .element__delete-button:hover {
   opacity: 0.6;
 }
+
+.element__delete-button:active {
+  transform: translate(0px, 3px);
+}

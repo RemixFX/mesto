@@ -1,11 +1,11 @@
-let popupMenuButton = document.querySelector('.profile__edit-button');
-let popupMenu =  document.querySelector('.popup');
-let popupCloseButton =  popupMenu.querySelector('.popup__close-button');
-let formElement =  popupMenu.querySelector('.form');
-let nameInput =  popupMenu.querySelector('.form__input_type_name');
-let jobInput =  popupMenu.querySelector('.form__input_type_job');
-let nameOutput = document.querySelector('.profile__name');
-let jobOutput = document.querySelector('.profile__job');
+const popupMenuButton = document.querySelector('.profile__edit-button');
+const popupMenu =  document.querySelector('.popup');
+const popupCloseButton =  popupMenu.querySelector('.popup__close-button');
+const formElement =  popupMenu.querySelector('.form');
+const nameInput =  popupMenu.querySelector('.form__input_type_name');
+const jobInput =  popupMenu.querySelector('.form__input_type_job');
+const nameOutput = document.querySelector('.profile__name');
+const jobOutput = document.querySelector('.profile__job');
 
 
 function toggleForm(evt) {
@@ -32,6 +32,10 @@ formElement.addEventListener('submit', formSubmitHandler);
 
 const elementsContainer = document.querySelector('.elements');
 const elementsTemplate = document.querySelector('#elements-template').content;
+const imagePopup = document.querySelector('.popup-card');
+const imagePopupLink = document.querySelector('.popup-card__image');
+const imagePopupName = document.querySelector('.popup-card__image-name');
+const imagePopupCloseButton = imagePopup.querySelector('.popup__close-button_type_image-popup');
 const initialCards = [
   {
     name: 'Архыз',
@@ -73,20 +77,36 @@ const addLike = evt => evt.target.classList.toggle('element__like-button_type_ac
 
 const removeCard = evt => evt.target.closest('.element').remove();
 
+// Открытие попапа с картинкой
+
+const openImagePopup = (evt) => {
+  imagePopup.classList.add('popup_opened');
+  imagePopupLink.src = evt.target.src;
+  imagePopupName.textContent = evt.target.closest('.element').textContent;
+};
+
+// Закрытие попапа с картинкой
+
+const closeImagePopup = () => imagePopup.classList.remove('popup_opened');
+
+imagePopupCloseButton.addEventListener('click', closeImagePopup);
+
 // главная функция добавления карточек
 
-const AddCard = (element) => {
+const addCard = (element) => {
   const card = elementsTemplate.querySelector('.element').cloneNode(true);
+  const cardImage = card.querySelector('.element__image');
 
-  card.querySelector('.element__image').src = element.link;
-  card.querySelector('.element__image').alt = element.alt;
+  cardImage.src = element.link;
+  cardImage.alt = element.alt;
+  cardImage.addEventListener('click', openImagePopup);
   card.querySelector('.element__name').textContent = element.name;
   card.querySelector('.element__delete-button').addEventListener('click', removeCard);
   card.querySelector('.element__like-button').addEventListener('click', addLike);
   elementsContainer.prepend(card);
 };
 
-initialCards.forEach(element => AddCard(element));
+initialCards.forEach(element => addCard(element));
 
 // Форма добавления карточки
 
@@ -109,14 +129,13 @@ const linkCardInput = popupMenuAddCard.querySelector('.form__input_type_link');
 
 function addCardSubmitHandler(evt) {
   evt.preventDefault();
-  AddCard({
+  addCard({
     link: linkCardInput.value,
-    name: nameCardInput.value
+    name: nameCardInput.value,
+    alt: 'Не удалось загрузить картинку по указанному адресу'
   });
   formAddCard.reset();
   toggleFormAddCard();
 };
 
 formAddCard.addEventListener('submit', addCardSubmitHandler);
-
-
