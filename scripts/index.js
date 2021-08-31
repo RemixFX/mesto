@@ -7,35 +7,47 @@ const jobInput =  popupMenu.querySelector('.form__input_type_job');
 const nameOutput = document.querySelector('.profile__name');
 const jobOutput = document.querySelector('.profile__job');
 
+// Единая функция открытия модальных окон
 
-function toggleForm(evt) {
-  popupMenu.classList.toggle('popup_opened');
-  evt.preventDefault();
-  if (popupMenu.classList.contains('popup_opened')) {
-    nameInput.value = nameOutput.textContent;
-    jobInput.value = jobOutput.textContent;
-  }
+function openModalWindow(modalWindow) {
+  modalWindow.classList.add('popup_opened');
+}
+
+// Единая функция закрытия модальных окон
+
+function closeModalWindow(modalWindow) {
+  modalWindow.classList.remove('popup_opened');
 };
+
+ // Функция вставки значений из текстовых полей на сайт и закрытие формы
 
 function formSubmitHandler(evt) {
   evt.preventDefault();
   nameOutput.textContent = nameInput.value;
   jobOutput.textContent = jobInput.value;
-  toggleForm(evt);
+  closeModalWindow(popupMenu);
 };
 
-popupMenuButton.addEventListener('click', toggleForm);
-popupCloseButton.addEventListener('click', toggleForm);
+// Вызов формы и подгрузка значений в поля формы из сайта
+
+popupMenuButton.addEventListener('click', function() {
+  openModalWindow(popupMenu);
+  nameInput.value = nameOutput.textContent;
+  jobInput.value = jobOutput.textContent;
+});
+
+// Закрытие формы
+
+popupCloseButton.addEventListener('click', () => closeModalWindow(popupMenu));
+
+// Отправка формы
+
 formElement.addEventListener('submit', formSubmitHandler);
 
 // Шесть карточек «из коробки»
 
 const elementsContainer = document.querySelector('.elements');
 const elementsTemplate = document.querySelector('#elements-template').content;
-const imagePopup = document.querySelector('.popup-card');
-const imagePopupLink = document.querySelector('.popup-card__image');
-const imagePopupName = document.querySelector('.popup-card__image-name');
-const imagePopupCloseButton = imagePopup.querySelector('.popup__close-button_type_image-popup');
 const initialCards = [
   {
     name: 'Архыз',
@@ -63,9 +75,9 @@ const initialCards = [
     alt: 'железная дорога уходящая в даль, вдоль лесистой местности'
   },
   {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-    alt: 'зимнее озеро с причудливо застывшими корками льда'
+    name: 'Томск',
+    link: 'http://dn1.vtomske.ru/a/8e76edba16c67593c95cd3b2b3eabff0_.jpg',
+    alt: 'томский техникум информационных технологий &#128591;'
   }
 ];
 
@@ -77,21 +89,22 @@ const addLike = evt => evt.target.classList.toggle('element__like-button_type_ac
 
 const removeCard = evt => evt.target.closest('.element').remove();
 
-// Открытие попапа с картинкой
+// Функция подгрузки атрибутов в попап открытия картинки
 
-const openImagePopup = (evt) => {
-  imagePopup.classList.add('popup_opened');
+const imagePopup = document.querySelector('.popup-card');
+const imagePopupLink = imagePopup.querySelector('.popup-card__image');
+const imagePopupName = imagePopup.querySelector('.popup-card__image-name');
+
+const addAttrubuteToImagePopup = (evt) => {
   imagePopupLink.src = evt.target.src;
   imagePopupName.textContent = evt.target.closest('.element').textContent;
 };
 
 // Закрытие попапа с картинкой
+const imagePopupCloseButton = imagePopup.querySelector('.popup__close-button_type_image-popup');
+imagePopupCloseButton.addEventListener('click', () => closeModalWindow(imagePopup));
 
-const closeImagePopup = () => imagePopup.classList.remove('popup_opened');
-
-imagePopupCloseButton.addEventListener('click', closeImagePopup);
-
-// главная функция добавления карточек
+// Главная функция добавления карточек
 
 const addCard = (element) => {
   const card = elementsTemplate.querySelector('.element').cloneNode(true);
@@ -99,27 +112,26 @@ const addCard = (element) => {
 
   cardImage.src = element.link;
   cardImage.alt = element.alt;
-  cardImage.addEventListener('click', openImagePopup);
+  cardImage.addEventListener('click', (evt) => {
+    openModalWindow(imagePopup);
+    addAttrubuteToImagePopup(evt);
+  });
   card.querySelector('.element__name').textContent = element.name;
   card.querySelector('.element__delete-button').addEventListener('click', removeCard);
   card.querySelector('.element__like-button').addEventListener('click', addLike);
   elementsContainer.prepend(card);
 };
 
-initialCards.forEach(element => addCard(element));
+initialCards.forEach(addCard);
 
-// Форма добавления карточки
+// Вызов функции открытия/закрытия для формы добавления карточки
 
 const popupMenuAddCard =  document.querySelector('.popup_type_add-card');
-const AddCardButton = document.querySelector('.profile__add-button');
-const AddCardCloseButton = popupMenuAddCard.querySelector('.popup__close-button_type_add-card');
+const addCardButton = document.querySelector('.profile__add-button');
+const addCardCloseButton = popupMenuAddCard.querySelector('.popup__close-button_type_add-card');
 
-function toggleFormAddCard() {
-  popupMenuAddCard.classList.toggle('popup_opened');
-};
-
-AddCardButton.addEventListener('click', toggleFormAddCard);
-AddCardCloseButton.addEventListener('click', toggleFormAddCard);
+addCardButton.addEventListener('click', () => openModalWindow(popupMenuAddCard));
+addCardCloseButton.addEventListener('click', () => closeModalWindow(popupMenuAddCard));
 
 // Добавление карточки
 
@@ -135,7 +147,7 @@ function addCardSubmitHandler(evt) {
     alt: 'Не удалось загрузить картинку по указанному адресу'
   });
   formAddCard.reset();
-  toggleFormAddCard();
+  closeModalWindow(popupMenuAddCard);
 };
 
 formAddCard.addEventListener('submit', addCardSubmitHandler);
