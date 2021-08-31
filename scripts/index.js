@@ -151,3 +151,5 @@ function addCardSubmitHandler(evt) {
 };
 
 formAddCard.addEventListener('submit', addCardSubmitHandler);
+
+// https://vk.com/ricodance
