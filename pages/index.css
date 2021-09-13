@@ -31,7 +31,11 @@
 @import url(../blocks/form/form.css);
 @import url(../blocks/form/__field/form__field.css);
 @import url(../blocks/form/__input/form__input.css);
-@import url(../blocks/form/__submit-button/popup__submit-button.css);
+@import url(../blocks/form/__input/_type_error/form__input_type_error.css);
+@import url(../blocks/form/__error/form__error.css);
+@import url(../blocks/form/__error/_visible/form__error_visible.css);
+@import url(../blocks/form/__submit-button/form__submit-button.css);
+@import url(../blocks/form/__submit-button/_disabled/form__submit-button_disabled.css);
 @import url(../blocks/popup-card/popup-card.css);
 @import url(../blocks/popup-card/__container/popup-card__container.css);
 @import url(../blocks/popup-card/__image-container/popup-card__image-container.css);

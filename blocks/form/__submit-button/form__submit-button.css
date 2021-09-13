@@ -8,6 +8,7 @@
   padding: 14px;
   transition: opacity 0.2s linear;
   cursor: pointer;
+  border: 1px solid #000000;
   border-radius: 2px;
 }
 

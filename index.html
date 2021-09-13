@@ -45,12 +45,14 @@
       <div class="popup__container">
         <button class="popup__close-button" type="button"></button>
         <h3 class="popup__heading">Редактировать профиль</h3>
-        <form class="form">
+        <form novalidate class="form">
           <fieldset class="form__field">
-            <input type="text" autocomplete="off" name="first-name" value="Жак-Ив Кусто"
-              class="form__input form__input_type_name">
-            <input type="text" autocomplete="off" name="job" value="Исследователь океана"
-              class="form__input form__input_type_job">
+            <input type="text" autocomplete="off" name="first-name" id="first-name" value="Жак-Ив Кусто"
+              required minlength="2" maxlength="40" class="form__input form__input_type_name">
+              <span id="first-name-error" class="form__error">Вы пропустили это поле.</span>
+            <input type="text" autocomplete="off" name="job" id="job" value="Исследователь океана"
+              required minlength="2" maxlength="200" class="form__input form__input_type_job">
+              <span id="job-error" class="form__error">Вы пропустили это поле.</span>
           </fieldset>
           <button class="form__submit-button" autofocus type="submit">Сохранить</button>
         </form>
@@ -60,12 +62,14 @@
       <div class="popup__container">
         <button class="popup__close-button popup__close-button_type_add-card" type="button"></button>
         <h3 class="popup__heading">Новое место</h3>
-        <form class="form">
+        <form novalidate class="form">
           <fieldset class="form__field">
-            <input type="text" autocomplete="off" name="name" placeholder="Название"
-              required class="form__input form__input_type_name-card">
-            <input type="text" autocomplete="off" name="link" placeholder="Ссылка на картинку"
+            <input type="text" autocomplete="off" name="name" id="name" placeholder="Название"
+              required minlength="2" maxlength="30" class="form__input form__input_type_name-card">
+            <span id="name-error" class="form__error">Вы пропустили это поле.</span>
+            <input type="url" autocomplete="off" name="link" id="link" placeholder="Ссылка на картинку"
               required class="form__input form__input_type_link">
+            <span id="link-error" class="form__error">Вы пропустили это поле.</span>
           </fieldset>
           <button class="form__submit-button" type="submit">Создать</button>
         </form>
@@ -82,6 +86,7 @@
     </div>
   </div>
   <script src="./scripts/index.js"></script>
+  <script src="./scripts/validate.js"></script>
 </body>
 
 </html>
