@@ -11,8 +11,9 @@ const jobOutput = document.querySelector('.profile__job');
 
 function openModalWindow(modalWindow) {
   modalWindow.classList.add('popup_opened');
-  modalWindow.addEventListener('click', () => closeOverlay(modalWindow));
-}
+  modalWindow.addEventListener('click', () => closeByOverlay(modalWindow));
+  document.addEventListener('keydown', (button) => closeByEscape(button, modalWindow));
+};
 
 // Единая функция закрытия модальных окон
 
@@ -22,17 +23,16 @@ function closeModalWindow(modalWindow) {
 
 //Единая функция закрытия модальных окон через клавишу Escape
 
-document.addEventListener('keydown', (button) => {
+const closeByEscape = (button, modalWindow) => {
   if (button.key === 'Escape') {
-    document.querySelectorAll('.popup').forEach((popupchik) => {
-      closeModalWindow(popupchik);
-    });
+    closeModalWindow(modalWindow);
+    document.removeEventListener('keydown', (button) => closeByEscape(button, modalWindow))
   };
-});
+};
 
 //Единая функция закрытия модальных окон по клику на оверлей
 
-const closeOverlay = (modalWindow) => {
+const closeByOverlay = (modalWindow) => {
   const popupContainer = modalWindow.querySelector('.popup__container,.popup-card__container');
   popupContainer.addEventListener('click', evt => evt.stopPropagation());
   closeModalWindow(modalWindow);
