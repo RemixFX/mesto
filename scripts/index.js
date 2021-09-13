@@ -11,12 +11,31 @@ const jobOutput = document.querySelector('.profile__job');
 
 function openModalWindow(modalWindow) {
   modalWindow.classList.add('popup_opened');
+  modalWindow.addEventListener('click', () => closeOverlay(modalWindow));
 }
 
 // Единая функция закрытия модальных окон
 
 function closeModalWindow(modalWindow) {
   modalWindow.classList.remove('popup_opened');
+};
+
+//Единая функция закрытия модальных окон через клавишу Escape
+
+document.addEventListener('keydown', (button) => {
+  if (button.key === 'Escape') {
+    document.querySelectorAll('.popup').forEach((popupchik) => {
+      closeModalWindow(popupchik);
+    });
+  };
+});
+
+//Единая функция закрытия модальных окон по клику на оверлей
+
+const closeOverlay = (modalWindow) => {
+  const popupContainer = modalWindow.querySelector('.popup__container,.popup-card__container');
+  popupContainer.addEventListener('click', evt => evt.stopPropagation());
+  closeModalWindow(modalWindow);
 };
 
  // Функция вставки значений из текстовых полей на сайт и закрытие формы
