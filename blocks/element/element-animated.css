@@ -1,0 +1,10 @@
+@keyframes element-animated {
+  100%{
+    transform: translateX(220px);
+    opacity: 0;
+  }
+}
+
+.element-animated {
+  animation: element-animated 0.38s linear;
+}

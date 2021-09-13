@@ -104,6 +104,13 @@ const initialCards = [
 
 const addLike = evt => evt.target.classList.toggle('element__like-button_type_active');
 
+// Аннимация перед удалением карточки
+
+const animation = evt => {
+  evt.target.closest('.element').classList.add('element-animated');
+  evt.target.closest('.element').addEventListener('animationend', removeCard);
+};
+
 // Удаление карточки
 
 const removeCard = evt => evt.target.closest('.element').remove();
@@ -136,7 +143,7 @@ const addCard = (element) => {
     addAttrubuteToImagePopup(evt);
   });
   card.querySelector('.element__name').textContent = element.name;
-  card.querySelector('.element__delete-button').addEventListener('click', removeCard);
+  card.querySelector('.element__delete-button').addEventListener('click', animation);
   card.querySelector('.element__like-button').addEventListener('click', addLike);
   elementsContainer.prepend(card);
 };

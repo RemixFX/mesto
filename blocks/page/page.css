@@ -5,6 +5,7 @@
   min-height: 100vh;
   color: #FFFFFF;
   margin: auto;
+  overflow: hidden;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
