@@ -17,7 +17,7 @@ const hideInputError = (inputElement, errorElement, inputErrorClass, errorClass)
 //объявляем функцию, которая проверяет валидно ли поле формы и вызывает фукнцию показа
 //или скрытия ошибки
 
-checkInputValidity = (formElement, inputElement, inputErrorClass, errorClass) => {
+const checkInputValidity = (formElement, inputElement, inputErrorClass, errorClass) => {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   if (!inputElement.validity.valid) {
     showInputError(inputElement, errorElement, inputErrorClass, errorClass);
@@ -28,37 +28,46 @@ checkInputValidity = (formElement, inputElement, inputErrorClass, errorClass) =>
 
 //объявляем функцию для кнопки submit, которая проверяет валидны ли ВСЕ поля в этой форме
 
-checkFormValidity = (inputList) => {
+const checkFormValidity = (inputList) => {
   return inputList.some(inputElement => {
     return !inputElement.validity.valid;
   });
 };
 
+// объявляем функцию проверки на пустые строки при запуске формы
+
+//const hasNotInputValues = (inputList) => {
+//  return inputList.some(inputElement => {
+//    return inputElement.value.length === 0;
+//  });
+//};
+
 //объявляем функцию для кнопки submit, которая включает или выключает кнопку
 //в зависимости от того, валидны ли все поля в этой форме
 
-toggleButtonStyle = (formElement, inputList, submitButtonSelector, inactiveButtonClass) => {
-  const battonElement = formElement.querySelector(submitButtonSelector);
-  if (checkFormValidity(inputList)) {
-    battonElement.classList.add(inactiveButtonClass);
-    battonElement.setAttribute('disabled', 'fuck');
+const toggleButtonStyle = (inputList, buttonElement, inactiveButtonClass) => {
+  if (checkFormValidity(inputList)) {    // || hasNotInputValues(inputList) is not work
+    buttonElement.classList.add(inactiveButtonClass);
+    buttonElement.setAttribute('disabled', 'good');
   } else {
-    battonElement.classList.remove(inactiveButtonClass);
-    battonElement.removeAttribute('disabled');
+    buttonElement.classList.remove(inactiveButtonClass);
+    buttonElement.removeAttribute('disabled');
   }
 };
 
 //объявляем функцию навешивания слушателей
 
-setEventListeners = (formElement, inputSelector, submitButtonSelector, inputErrorClass, errorClass, inactiveButtonClass) => {
+const setEventListeners = (formElement, inputSelector, submitButtonSelector, inputErrorClass, errorClass, inactiveButtonClass) => {
+
   const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+  const buttonElement = formElement.querySelector(submitButtonSelector);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
       checkInputValidity(formElement, inputElement, inputErrorClass, errorClass);
-      toggleButtonStyle(formElement, inputList, submitButtonSelector, inactiveButtonClass);
+      toggleButtonStyle(inputList, buttonElement, inactiveButtonClass);
     });
   });
-  toggleButtonStyle(formElement, inputList, submitButtonSelector, inactiveButtonClass);
+  toggleButtonStyle(inputList, buttonElement, inactiveButtonClass);
 };
 
 //объявляем функцию валидации, которая получает массив настроек в качестве аргумента
