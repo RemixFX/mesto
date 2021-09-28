@@ -1,3 +1,5 @@
+import {Card} from './Card.js';
+
 const popupMenuButton = document.querySelector(".profile__edit-button");
 const profilePopup = document.querySelector(".popup_type_edit-profile");
 const popups = document.querySelectorAll(".popup");
@@ -67,7 +69,6 @@ formElement.addEventListener("submit", formSubmitHandler);
 // Шесть карточек «из коробки»
 
 const elementsContainer = document.querySelector(".elements");
-const elementsTemplate = document.querySelector("#elements-template").content;
 const initialCards = [
   {
     name: "Архыз",
@@ -101,66 +102,32 @@ const initialCards = [
   },
 ];
 
-//  Лайк карточки
-
-const addLike = (evt) =>
-  evt.target.classList.toggle("element__like-button_type_active");
-
-// Аннимация перед удалением карточки
-
-const animation = (evt) => {
-  evt.target.closest(".element").classList.add("element-animated");
-  evt.target.closest(".element").addEventListener("animationend", removeCard);
-};
-
-// Удаление карточки
-
-const removeCard = (evt) => evt.target.closest(".element").remove();
-
 // Функция подгрузки атрибутов в попап открытия картинки
 
 const imagePopup = document.querySelector(".popup-card");
 const imagePopupLink = imagePopup.querySelector(".popup-card__image");
 const imagePopupName = imagePopup.querySelector(".popup-card__image-name");
 
-const addAttrubuteToImagePopup = (evt) => {
-  imagePopupLink.src = evt.target.src;
-  imagePopupName.textContent = evt.target.closest(".element").textContent;
-};
+const openImageHandler = (name, link) => {
+  imagePopupName.textContent = name;
+  imagePopupLink.src = link;
 
-// Функция создания карточек
-
-const createCard = (element) => {
-  const card = elementsTemplate.querySelector(".element").cloneNode(true);
-  const cardImage = card.querySelector(".element__image");
-
-  cardImage.src = element.link;
-  cardImage.alt = element.alt;
-  cardImage.addEventListener("click", (evt) => {
-    openModalWindow(imagePopup);
-    addAttrubuteToImagePopup(evt);
-  });
-  card.querySelector(".element__name").textContent = element.name;
-  card
-    .querySelector(".element__delete-button")
-    .addEventListener("click", animation);
-  card
-    .querySelector(".element__like-button")
-    .addEventListener("click", addLike);
-
-  return card;
-};
+  openModalWindow(imagePopup);
+}
 
 // Единая функция добавления карточек
 
 const addCard = (element) => {
-  elementsContainer.prepend(createCard(element));
+  elementsContainer.prepend(element);
 };
 
 // Добавление шести карочек из массива
 
-initialCards.forEach((element) => {
-  addCard(element);
+initialCards.forEach((item) => {
+  const card = new Card(item, '#elements-template', openImageHandler);
+  const cardElement = card.generateCard();
+
+  addCard(cardElement);
 });
 
 // Вызов функции открытия формы добавления карточки
@@ -170,7 +137,7 @@ const addCardButton = document.querySelector(".profile__add-button");
 
 addCardButton.addEventListener("click", () => openModalWindow(popupMenuAddCard));
 
-// Добавление карточки
+// Добавление карточки через форму
 
 const formAddCard =  popupMenuAddCard.querySelector('.form');
 const nameCardInput = popupMenuAddCard.querySelector('.form__input_type_name-card');
@@ -179,11 +146,13 @@ const submitButtonAddCard = popupMenuAddCard.querySelector('.form__submit-button
 
 function addCardSubmitHandler(evt) {
   evt.preventDefault();
-  addCard({
-    link: linkCardInput.value,
+  const card = new Card({
     name: nameCardInput.value,
-    alt: 'Не удалось загрузить картинку по указанному адресу'
-  });
+    link: linkCardInput.value
+  }, '#elements-template', openImageHandler);
+  const cardElement = card.generateCard();
+
+  addCard(cardElement);
   formAddCard.reset();
 
   submitButtonAddCard.classList.add('form__submit-button_disabled');
