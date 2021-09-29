@@ -1,4 +1,5 @@
 import {Card} from './Card.js';
+import {settings, FormValidator} from './FormValidator.js';
 
 const popupMenuButton = document.querySelector(".profile__edit-button");
 const profilePopup = document.querySelector(".popup_type_edit-profile");
@@ -161,3 +162,8 @@ function addCardSubmitHandler(evt) {
 }
 
 formAddCard.addEventListener('submit', addCardSubmitHandler);
+
+// Запуск валидации для каждой формы через класс
+
+new FormValidator(settings, '.form-profile').enableValidation();
+new FormValidator(settings, '.form-add-card').enableValidation();

@@ -45,7 +45,7 @@
       <div class="popup__container">
         <button class="popup__close-button popup__close-button_type_edit-profile" type="button"></button>
         <h3 class="popup__heading">Редактировать профиль</h3>
-        <form novalidate class="form">
+        <form novalidate class="form form-profile">
           <fieldset class="form__field">
             <input type="text" autocomplete="off" name="first-name" id="first-name" value="Жак-Ив Кусто"
               required minlength="2" maxlength="40" class="form__input form__input_type_name">
@@ -62,7 +62,7 @@
       <div class="popup__container">
         <button class="popup__close-button popup__close-button_type_add-card" type="button"></button>
         <h3 class="popup__heading">Новое место</h3>
-        <form novalidate class="form">
+        <form novalidate class="form form-add-card">
           <fieldset class="form__field">
             <input type="text" autocomplete="off" name="name" id="name" placeholder="Название"
               required minlength="2" maxlength="30" class="form__input form__input_type_name-card">
@@ -86,7 +86,7 @@
     </div>
   </div>
   <script type="module" src="./scripts/index.js"></script>
-  <script src="./scripts/validate.js"></script>
+  <!--<script src="./scripts/validate.js"></script> -->
 </body>
 
 </html>
