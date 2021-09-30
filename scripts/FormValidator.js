@@ -1,15 +1,6 @@
-export const settings = {
-  inputSelector: '.form__input',
-  submitButtonSelector: '.form__submit-button',
-  inactiveButtonClass: 'form__submit-button_disabled',
-  inputErrorClass: 'form__input_type_error',
-  errorClass: 'form__error_visible'
-};
-
 export class FormValidator {
-  constructor(settings, formSelector) {
-    this._formSelector = formSelector;
-    this._formElement = document.querySelector(this._formSelector)
+  constructor(settings, formElement) {
+    this._formElement = formElement;
     this._inputSelector = settings.inputSelector;
     this._submitButtonSelector = settings.submitButtonSelector;
     this._inactiveButtonClass = settings.inactiveButtonClass;
@@ -56,7 +47,7 @@ export class FormValidator {
   //объявляем функцию для кнопки submit, которая включает или выключает кнопку
   //в зависимости от того, валидны ли все поля в этой форме
 
-  _toggleButtonStyle (inputList, buttonElement) {
+  toggleButtonState (inputList, buttonElement) {
     if (this._checkFormValidity(inputList)) {
       buttonElement.classList.add(this._inactiveButtonClass);
       buttonElement.setAttribute('disabled', 'good');
@@ -74,10 +65,10 @@ export class FormValidator {
     inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
-        this._toggleButtonStyle(inputList, buttonElement);
+        this.toggleButtonState(inputList, buttonElement);
       });
     });
-    this._toggleButtonStyle(inputList, buttonElement);
+    this.toggleButtonState(inputList, buttonElement);
   }
 
   //функция включения валидации

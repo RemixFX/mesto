@@ -1,10 +1,11 @@
 import {Card} from './Card.js';
-import {settings, FormValidator} from './FormValidator.js';
+import {FormValidator} from './FormValidator.js';
+import {settings} from './settings.js';
 
 const popupMenuButton = document.querySelector(".profile__edit-button");
 const profilePopup = document.querySelector(".popup_type_edit-profile");
 const popups = document.querySelectorAll(".popup");
-const formElement = profilePopup.querySelector(".form");
+const profileForm = profilePopup.querySelector(".form-profile");
 const nameInput = profilePopup.querySelector(".form__input_type_name");
 const jobInput = profilePopup.querySelector(".form__input_type_job");
 const nameOutput = document.querySelector(".profile__name");
@@ -65,7 +66,7 @@ popupMenuButton.addEventListener("click", function () {
 
 // Отправка формы
 
-formElement.addEventListener("submit", formSubmitHandler);
+profileForm.addEventListener("submit", formSubmitHandler);
 
 // Шесть карточек «из коробки»
 
@@ -97,9 +98,9 @@ const initialCards = [
     alt: "железная дорога уходящая в даль, вдоль лесистой местности",
   },
   {
-    name: "Минск",
-    link: "https://adukar.by/images/photo/fasad-isz-1.jpg",
-    alt: "Институт современных знаний имени А.М. Широкова",
+    name: "Уральск",
+    link: "https://www.alem-edu.kz/wp-content/uploads/2020/04/0.jpg",
+    alt: "Западно-Казахстанский государственный университет им. М. Утемисова",
   },
 ];
 
@@ -122,13 +123,17 @@ const addCard = (element) => {
   elementsContainer.prepend(element);
 };
 
-// Добавление шести карочек из массива
+//Функция создания нового экземпляра карточки из класса
+
+const createCard = (item) => {
+  const card = new Card(item, '#elements-template', openImageHandler);
+  return card.generateCard();
+}
+
+// Инициализация шести карочек из массива
 
 initialCards.forEach((item) => {
-  const card = new Card(item, '#elements-template', openImageHandler);
-  const cardElement = card.generateCard();
-
-  addCard(cardElement);
+  addCard(createCard(item));
 });
 
 // Вызов функции открытия формы добавления карточки
@@ -140,24 +145,25 @@ addCardButton.addEventListener("click", () => openModalWindow(popupMenuAddCard))
 
 // Добавление карточки через форму
 
-const formAddCard =  popupMenuAddCard.querySelector('.form');
+const formAddCard =  popupMenuAddCard.querySelector('.form-add-card');
 const nameCardInput = popupMenuAddCard.querySelector('.form__input_type_name-card');
 const linkCardInput = popupMenuAddCard.querySelector('.form__input_type_link');
-const submitButtonAddCard = popupMenuAddCard.querySelector('.form__submit-button')
+//const submitButtonAddCard = popupMenuAddCard.querySelector('.form__submit-button')
+const addCardValidator = new FormValidator(settings, formAddCard);
+
 
 function addCardSubmitHandler(evt) {
   evt.preventDefault();
-  const card = new Card({
+  addCard(createCard({
     name: nameCardInput.value,
     link: linkCardInput.value
-  }, '#elements-template', openImageHandler);
-  const cardElement = card.generateCard();
+  }, '#elements-template', openImageHandler));
 
-  addCard(cardElement);
   formAddCard.reset();
+  const inputList = Array.from(formAddCard.querySelectorAll('.form__input'));
+  const buttonElement = formAddCard.querySelector('.form__submit-button');
+  addCardValidator.toggleButtonState(inputList, buttonElement); //без передачи конкретных аргументов не работает
 
-  submitButtonAddCard.classList.add('form__submit-button_disabled');
-  submitButtonAddCard.setAttribute('disabled', 'true');
   closeModalWindow(popupMenuAddCard);
 }
 
@@ -165,5 +171,6 @@ formAddCard.addEventListener('submit', addCardSubmitHandler);
 
 // Запуск валидации для каждой формы через класс
 
-new FormValidator(settings, '.form-profile').enableValidation();
-new FormValidator(settings, '.form-add-card').enableValidation();
+new FormValidator(settings, profileForm).enableValidation();
+addCardValidator.enableValidation();
+
