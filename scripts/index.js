@@ -148,8 +148,9 @@ addCardButton.addEventListener("click", () => openModalWindow(popupMenuAddCard))
 const formAddCard =  popupMenuAddCard.querySelector('.form-add-card');
 const nameCardInput = popupMenuAddCard.querySelector('.form__input_type_name-card');
 const linkCardInput = popupMenuAddCard.querySelector('.form__input_type_link');
-//const submitButtonAddCard = popupMenuAddCard.querySelector('.form__submit-button')
 const addCardValidator = new FormValidator(settings, formAddCard);
+const inputList = Array.from(formAddCard.querySelectorAll('.form__input'));
+const buttonElement = formAddCard.querySelector('.form__submit-button');
 
 
 function addCardSubmitHandler(evt) {
@@ -160,9 +161,8 @@ function addCardSubmitHandler(evt) {
   }, '#elements-template', openImageHandler));
 
   formAddCard.reset();
-  const inputList = Array.from(formAddCard.querySelectorAll('.form__input'));
-  const buttonElement = formAddCard.querySelector('.form__submit-button');
-  addCardValidator.toggleButtonState(inputList, buttonElement); //без передачи конкретных аргументов не работает
+
+  addCardValidator.toggleButtonState(inputList, buttonElement);
 
   closeModalWindow(popupMenuAddCard);
 }
