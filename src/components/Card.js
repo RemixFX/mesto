@@ -1,10 +1,10 @@
 export class Card {
 
-  constructor(data, cardSelector, openImageHandler) {
+  constructor(data, cardSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._alt = data.alt;
-    this._openImageHandler = openImageHandler;
+    this._handleCardClick = handleCardClick;
     this._cardSelector = cardSelector;
   }
 
@@ -51,6 +51,6 @@ export class Card {
     this._element.addEventListener('animationend', () => this._removeCard());
 
     this._element.querySelector('.element__image')
-    .addEventListener('click', () => this._openImageHandler(this._name, this._link));
+    .addEventListener('click', () => this._handleCardClick(this._name, this._link));
   }
 };
