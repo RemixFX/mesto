@@ -33,14 +33,12 @@ export const initialCards = [
     alt: "железная дорога уходящая в даль, вдоль лесистой местности",
   },
   {
-    name: "Уральск",
-    link: "https://www.alem-edu.kz/wp-content/uploads/2020/04/0.jpg",
-    alt: "Западно-Казахстанский государственный университет им. М. Утемисова",
+    name: "Франция",
+    link: "https://myspace.ge/file/pic/photo/2018/02/573d18c9c0d7dcc46fec3abcc8d9ae80.gif",
+    alt: "Замок Шамбор Франция",
   },
 ];
 
-export const imagePopupLink = document.querySelector(".popup-card__image");
-export const imagePopupName = document.querySelector(".popup-card__image-name");
 export const popupMenuButton = document.querySelector(".profile__edit-button");
 export const nameInput = document.querySelector(".form__input_type_name");
 export const jobInput = document.querySelector(".form__input_type_job");

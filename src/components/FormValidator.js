@@ -12,28 +12,35 @@ export class FormValidator {
 
   //объявляем функцию показа ошибки
 
-  _showInputError(inputElement, errorElement) {
+  _showInputError(inputElement) {
+    this._getErrorElement(inputElement);
     inputElement.classList.add(this._inputErrorClass);
-    errorElement.textContent = inputElement.validationMessage;
-    errorElement.classList.add(this._errorClass);
+    this._errorElement.textContent = inputElement.validationMessage;
+    this._errorElement.classList.add(this._errorClass);
   }
 
   //объявляем функцию скрытия ошибки
 
-  _hideInputError(inputElement, errorElement) {
+  _hideInputError(inputElement) {
+    this._getErrorElement(inputElement);
     inputElement.classList.remove(this._inputErrorClass);
-    errorElement.classList.remove(this._errorClass);
+    this._errorElement.classList.remove(this._errorClass);
+  }
+
+  // ищем 1 раз _errorElement
+
+  _getErrorElement(inputElement) {
+    this._errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
   }
 
   //объявляем функцию, которая проверяет валидно ли поле формы и вызывает фукнцию показа
   //или скрытия ошибки
 
   _checkInputValidity (inputElement) {
-    const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
     if (!inputElement.validity.valid) {
-      this._showInputError(inputElement, errorElement, this._inputErrorClass, this._errorClass);
+      this._showInputError(inputElement, this._inputErrorClass, this._errorClass);
     } else {
-      this._hideInputError(inputElement, errorElement, this._inputErrorClass, this._errorClass);
+      this._hideInputError(inputElement, this._inputErrorClass, this._errorClass);
     };
   };
 
@@ -48,8 +55,8 @@ export class FormValidator {
   //объявляем функцию для кнопки submit, которая включает или выключает кнопку
   //в зависимости от того, валидны ли все поля в этой форме
 
-  toggleButtonState () {
-    if (this._checkFormValidity(this._inputList)) {
+  _toggleButtonState () {
+    if (this._checkFormValidity(this._inputList)) { // без this._inputList не работает
       this._buttonElement.classList.add(this._inactiveButtonClass);
       this._buttonElement.setAttribute('disabled', 'good');
     } else {
@@ -58,16 +65,26 @@ export class FormValidator {
     }
   };
 
+  //объявляем функцию принудительной очистки ошибок в инпутах
+
+  resetValidation() {
+    this._toggleButtonState();
+
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+    });
+  }
+
   //объявляем функцию навешивания слушателей
 
   _setEventListeners () {
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
-        this.toggleButtonState();
+        this._toggleButtonState();
       });
     });
-    this.toggleButtonState();
+    this._toggleButtonState();
   }
 
   //функция включения валидации

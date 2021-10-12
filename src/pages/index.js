@@ -6,66 +6,77 @@ import PopupWithImage from '../components/PopupWithImage';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import {settings, initialCards, popupMenuButton, nameInput, jobInput,
-  elementsContainer, imagePopupName, imagePopupLink,
-  addCardButton, formAddCard, profileForm} from '../components/settings.js';
+  elementsContainer, addCardButton, formAddCard, profileForm} from '../utils/settings.js';
 
-// Отправка формы редактирования профиля
+// Объявление класса PopupWithImage
+
+const popupImage = new PopupWithImage('.popup-card');
+popupImage.setEventListeners();
+
+// Объявление класса UserInfo
+
+const profileInfo = new UserInfo('.profile__name', '.profile__job');
+
+// Объявление класса PopupWithForm для попапа редактирования профиля
 
 const profilePopup = new PopupWithForm({
   popupSelector: '.popup_type_edit-profile',
-  handleFormSubmit: (FormData) => {
-    const profileInfo = new UserInfo('.profile__name', '.profile__job');
-    profileInfo.setUserInfo({nameInput, jobInput}, FormData);
+  handleFormSubmit: (data) => {
+    console.log(data);
+    profileInfo.setUserInfo(data);
     profilePopup.close();
   }
 });
+profilePopup.setEventListeners();
 
 // открытие попапа с  формой редактирования профиля
 
 popupMenuButton.addEventListener("click", function () {
-  const profileInfo = new UserInfo('.profile__name', '.profile__job');
   const data = profileInfo.getUserInfo();
   nameInput.value = data.name;
   jobInput.value = data.job;
+  profileFormValidator.resetValidation();
   profilePopup.open();
 });
-profilePopup.setEventListeners();
 
 // Функция передачи значений и открытия попапа с картинкой
 
-const handleCardClick = (name, link) => {
-  const popupImage = new PopupWithImage(name, link, '.popup-card');
-  popupImage.open({imagePopupName, imagePopupLink});
-  popupImage.setEventListeners();
+const handleCardClick = (name, link) => popupImage.open({name, link});
+
+// Функция создания карточки
+
+const createCard = (item) => {
+  const card = new Card(item, '#elements-template', handleCardClick);
+  return card.generateCard();
 };
 
 // Инициализация шести карочек из массива
 
-const createCard = new Section({
+const renderCard = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card(item, '#elements-template', handleCardClick);
-    createCard.addItem(card.generateCard());
+    renderCard.addItem(createCard(item));
   }
 }, elementsContainer);
-createCard.renderItems();
+renderCard.renderItems();
 
 // Добавление карточки через попап с формой для новой карточки
 
 const newCardPopup = new PopupWithForm({
   popupSelector: '.popup_type_add-card',
-  handleFormSubmit: (FormData) => {
-   const Newcard = new Card(FormData, '#elements-template', handleCardClick);
-        createCard.addItem(Newcard.generateCard());
-        newCardPopup.close();
-        addCardValidator.toggleButtonState();
-      }
-    }, elementsContainer);
+  handleFormSubmit: (formData) => {
+    renderCard.addItem(createCard(formData));
+    newCardPopup.close();
+  }
+});
+newCardPopup.setEventListeners();
 
 // Открытие формы добавления новой карточки
 
-addCardButton.addEventListener("click", () => newCardPopup.open());
-newCardPopup.setEventListeners();
+addCardButton.addEventListener("click", () => {
+  newCardPopup.open();
+  addCardValidator.resetValidation();
+});
 
 // Запуск валидации для формы добавления новой карточки
 
@@ -74,4 +85,5 @@ addCardValidator.enableValidation();
 
 // Запуск валидации для формы изменения профиля
 
-new FormValidator(settings, profileForm).enableValidation();
+const profileFormValidator = new FormValidator(settings, profileForm);
+profileFormValidator.enableValidation();
