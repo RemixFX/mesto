@@ -1,43 +1,10 @@
 export const settings = {
   inputSelector: '.form__input',
-  submitButtonSelector: '.form__submit-button',
-  inactiveButtonClass: 'form__submit-button_disabled',
+  submitButtonSelector: '.popup__submit-button',
+  inactiveButtonClass: 'popup__submit-button_disabled',
   inputErrorClass: 'form__input_type_error',
   errorClass: 'form__error_visible'
 };
-
-export const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-    alt: "горные хребты с переходом от заснеженных верхушек до зеленых склонов",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-    alt: "ещё не замерзшее озере на опушке леса в зимнюю пору",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-    alt: "плотная застройка однотипными девятиэтажными домами",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-    alt: "темный грунт, редкая растительность, высокая гора с заснеженным склоном",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-    alt: "железная дорога уходящая в даль, вдоль лесистой местности",
-  },
-  {
-    name: "Франция",
-    link: "https://myspace.ge/file/pic/photo/2018/02/573d18c9c0d7dcc46fec3abcc8d9ae80.gif",
-    alt: "Замок Шамбор Франция",
-  },
-];
 
 export const popupMenuButton = document.querySelector(".profile__edit-button");
 export const nameInput = document.querySelector(".form__input_type_name");
@@ -46,4 +13,7 @@ export const elementsContainer = ".elements";
 export const addCardButton = document.querySelector(".profile__add-button");
 export const formAddCard =  document.querySelector('.form-add-card');
 export const profileForm = document.querySelector(".form-profile");
+export const avatarEditForm = document.querySelector('.form-edit-avatar');
+export const popupConfirmationHeading = document.querySelector('.popup-confirmation__heading');
+export const avatarEditButton = document.querySelector('.profile__avatar-button')
 

@@ -1,0 +1,4 @@
+.popup-confirmation_event_active {
+  background-color: rgba(211, 23, 23, 0.74);
+  transition: visibility 0.8s, opacity 0.8s linear;
+}

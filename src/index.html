@@ -15,11 +15,12 @@
     <main class="content">
       <section class="profile">
         <div class="profile__info">
-          <img class="profile__avatar" src="<%=require('./images/kusto_photo.jpg')%>" alt="улыбающийся мужчина на фоне океана">
+          <img class="profile__avatar" src="" alt="">
+          <button class="profile__avatar-button" type="button"></button>
           <div class="profile__info-block">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <h1 class="profile__name"></h1>
             <button class="profile__edit-button" type="button"></button>
-            <p class="profile__job">Исследователь океана</p>
+            <p class="profile__job"></p>
           </div>
         </div>
         <button class="profile__add-button" type="button"></button>
@@ -31,7 +32,10 @@
             <button class="element__delete-button" type="button"></button>
             <div class="element__description">
               <h2 class="element__name"></h2>
-              <button class="element__like-button" type="button"></button>
+              <div class="element__like-container">
+                <button class="element__like-button" type="button"></button>
+                <span class="element__like-value"></span>
+              </div>
             </div>
           </article>
         </template>
@@ -46,14 +50,14 @@
         <h3 class="popup__heading">Редактировать профиль</h3>
         <form novalidate class="form form-profile">
           <fieldset class="form__field">
-            <input type="text" autocomplete="off" name="nickname" id="nickname" value="Жак-Ив Кусто"
+            <input type="text" autocomplete="off" name="name" id="name" value="Жак-Ив Кусто"
               required minlength="2" maxlength="40" class="form__input form__input_type_name">
-              <span id="nickname-error" class="form__error">Вы пропустили это поле.</span>
-            <input type="text" autocomplete="off" name="job" id="job" value="Исследователь океана"
+              <span id="name-error" class="form__error">Вы пропустили это поле.</span>
+            <input type="text" autocomplete="off" name="about" id="about" value="Исследователь океана"
               required minlength="2" maxlength="200" class="form__input form__input_type_job">
-              <span id="job-error" class="form__error">Вы пропустили это поле.</span>
+              <span id="about-error" class="form__error">Вы пропустили это поле.</span>
           </fieldset>
-          <button class="form__submit-button" autofocus type="submit">Сохранить</button>
+          <button class="popup__submit-button" autofocus type="submit">Сохранить</button>
         </form>
       </div>
     </div>
@@ -63,14 +67,14 @@
         <h3 class="popup__heading">Новое место</h3>
         <form novalidate class="form form-add-card">
           <fieldset class="form__field">
-            <input type="text" autocomplete="off" name="name" id="name" placeholder="Название"
+            <input type="text" autocomplete="off" name="name" id="title" placeholder="Название"
               required minlength="2" maxlength="30" class="form__input form__input_type_name-card">
-            <span id="name-error" class="form__error">Вы пропустили это поле.</span>
+            <span id="title-error" class="form__error">Вы пропустили это поле.</span>
             <input type="url" autocomplete="off" name="link" id="link" placeholder="Ссылка на картинку"
               required class="form__input form__input_type_link">
             <span id="link-error" class="form__error">Вы пропустили это поле.</span>
           </fieldset>
-          <button class="form__submit-button" type="submit">Создать</button>
+          <button class="popup__submit-button" type="submit">Создать</button>
         </form>
       </div>
     </div>
@@ -81,6 +85,29 @@
           <button class="popup__close-button popup__close-button_type_image-popup" type="button"></button>
         </div>
         <span class="popup-card__image-name"></span>
+      </div>
+    </div>
+    <div class="popup popup-confirmation">
+      <div class="popup__container">
+        <button class="popup__close-button" type="button"></button>
+        <h3 class="popup__heading popup-confirmation__heading">Вы уверены?</h3>
+        <form class="form">
+          <button class="popup__submit-button" type="submit">Да</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup-avatar-edit">
+      <div class="popup__container">
+        <button class="popup__close-button" type="button"></button>
+        <h3 class="popup__heading">Обновить аватар</h3>
+        <form class="form form-edit-avatar">
+          <fieldset class="form__field">
+            <input type="url" autocomplete="off" name="avatar" id="avatar" placeholder="Ссылка на картинку"
+              required class="form__input form__input_type_link">
+            <span id="avatar-error" class="form__error">Вы пропустили это поле.</span>
+        </fieldset>
+        <button class="popup__submit-button" type="submit">Сохранить</button>
+        </form>
       </div>
     </div>
   </div>
