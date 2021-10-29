@@ -25,19 +25,6 @@ const api = new Api({
 
 const profileInfo = new UserInfo('.profile__name', '.profile__job', '.profile__avatar');
 
-// Получение данных пользователя от сервера
-
-let userId;
-const userData = api.getUserData();
-userData.then((data) => {
-  profileInfo.setUserInfo(data);
-  userId = data._id;
-})
-.catch((err) => {
-  console.log(err);
-});
-
-
 // Объявление класса PopupWithImage
 
 const popupImage = new PopupWithImage('.popup-card');
@@ -48,16 +35,16 @@ popupImage.setEventListeners();
 const profilePopup = new PopupWithForm({
   popupSelector: '.popup_type_edit-profile',
   handleFormSubmit: (data) => {
-    preLoad('.popup_type_edit-profile', true)
+    profilePopup.renderLoading(true)
     api.patchUserData(data)
-    .then((pzdata) => {
-      profileInfo.setUserInfo(pzdata);
+    .then((res) => {
+      profileInfo.setUserInfo(res);
       profilePopup.close();
     })
     .catch((err) => {
       console.log(err);
     })
-    .finally(() => preLoad('.popup_type_edit-profile', false, 'Сохранить'));
+    .finally(() => profilePopup.renderLoading(false, 'Сохранить'));
   }
 });
 profilePopup.setEventListeners();
@@ -77,7 +64,7 @@ popupMenuButton.addEventListener("click", function () {
 const avatarEditPopup = new PopupWithForm({
   popupSelector: '.popup-avatar-edit',
   handleFormSubmit: (data) => {
-    preLoad('.popup-avatar-edit', true);
+    avatarEditPopup.renderLoading(true);
     api.patchUserAvatar(data)
     .then((res) => {
       profileInfo.setUserInfo(res);
@@ -86,7 +73,7 @@ const avatarEditPopup = new PopupWithForm({
     .catch((err) => {
       console.log(err);
     })
-    .finally(() => preLoad('.popup-avatar-edit', false, 'Сохранить'));
+    .finally(() => avatarEditPopup.renderLoading(false, 'Сохранить'));
   }
 })
 avatarEditPopup.setEventListeners();
@@ -124,14 +111,20 @@ popupWithConfirmation.setEventListeners();
 
 const createCard = (item) => {
   const card = new Card(item, '#elements-template', userId, handleCardClick,
-  {addLike: _id => {
+  {handleAddLike: (_id, card) => {
     api.sendLike(_id)
-    .then((res) => card.setLikeValue(res))
+    .then((res) => {
+      card.setLikeValue(res)
+      card.addLike(card)
+    })
     .catch((err) => console.log(err));
   },
-  deleteLike: _id => {
+  handleDeleteLike: (_id, card) => {
     api.removeLike(_id)
-    .then((res) => card.setLikeValue(res))
+    .then((res) => {
+      card.setLikeValue(res)
+      card.deleteLike(card)
+    })
     .catch((err) => console.log(err));
   },
   handleRemoveClick: cardinfo => {
@@ -142,17 +135,22 @@ const createCard = (item) => {
   return card.generateCard();
 };
 
-// Загрузка карточек с сервера
+// Функция рендера карточек
 
-api.getInitialCards()
-.then((data) => {
-  const renderCard = new Section({
-    items: data,
-    renderer: (item) => {
-      renderCard.addItem(createCard(item));
-    }
-  }, elementsContainer);
-  renderCard.renderItems();
+const renderCard = new Section({
+  renderer: (item) => {
+    renderCard.addItem(createCard(item));
+  }
+}, elementsContainer);
+
+// Получения данных профиля и загрузка массива карточек с сервера
+
+let userId;
+api.getPageInfo()
+.then(([userData, cardList]) => {
+  profileInfo.setUserInfo(userData);
+  userId = userData._id;
+  renderCard.renderItems(cardList);
 })
 .catch((err) => {
   console.log(err);
@@ -163,16 +161,16 @@ api.getInitialCards()
 const newCardPopup = new PopupWithForm({
   popupSelector: '.popup_type_add-card',
   handleFormSubmit: (data) => {
-    preLoad('.popup_type_add-card', true);
+    newCardPopup.renderLoading(true);
     api.uploadNewCard(data)
     .then((res) => {
-      new Section({}, elementsContainer).addItem(createCard(res));
+      renderCard.renderItems([res]);
       newCardPopup.close();
     })
     .catch((err) => {
       console.log(err);
     })
-    .finally(() => preLoad('.popup_type_add-card', false, 'Создать'));
+    .finally(() => newCardPopup.renderLoading(false, 'Создать'));
   }
 });
 newCardPopup.setEventListeners();
@@ -198,16 +196,3 @@ profileFormValidator.enableValidation();
 
 const editAvatarValidator = new FormValidator(settings, avatarEditForm);
 editAvatarValidator.enableValidation();
-
-// Улучшенный UX всех форм
-
-const preLoad = (popupSelector, isLoading, text) => {
-  const element = document
-  .querySelector(popupSelector)
-  .querySelector('.popup__submit-button');
-  if (isLoading) {
-    element.textContent = 'Сохранение...';
-  } else if (!isLoading) {
-    element.textContent = `${text}`;
-  }
-}

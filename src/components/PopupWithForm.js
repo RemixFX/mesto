@@ -21,6 +21,17 @@ export default class PopupWithForm extends Popup {
     this._form.reset();
   }
 
+  // Улучшенный UX всех форм
+
+  renderLoading (isLoading, text) {
+    const element = this._popup.querySelector('.popup__submit-button');
+    if (isLoading) {
+      element.textContent = 'Сохранение...';
+    } else if (!isLoading) {
+      element.textContent = `${text}`;
+    }
+  }
+
   setEventListeners () {
     super.setEventListeners();
     this._form.addEventListener("submit", (evt) => {
