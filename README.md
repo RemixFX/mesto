@@ -25,6 +25,12 @@
 <br>
 
 
-##№ [Ссылка на работу в GitHub-Pages](https://remixfx.github.io/mesto-pure-javascript/)
+### [Ссылка на работу в GitHub-Pages](https://remixfx.github.io/mesto-pure-javascript/)
 
 __Мой третий проект на ЯндексПрактикум.__
+***
+Для запуска проекта необходимо:
+
+>установить зависимости `npm install`   
+>собрать вебпаком командой `npm run build`   
+>запустить index.html в папке `dist`
