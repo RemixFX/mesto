@@ -1,5 +1,7 @@
 # Проект: Место
 
+![ScreenRecorderProject3-min](https://user-images.githubusercontent.com/86429443/168590605-953077f6-5902-4eb8-aad3-2724f257073f.gif)
+
 Репозиторий проекта Mesto - многопользовательский сервис для публикации фото/картинок.
 
 **Включает только фронтенд часть, написан на чистом JavaScript.   
@@ -34,3 +36,5 @@ __Мой третий проект на ЯндексПрактикум.__
 >установить зависимости `npm install`   
 >собрать вебпаком командой `npm run build`   
 >запустить index.html в папке `dist`
+
+![webpack-5](https://user-images.githubusercontent.com/86429443/168588616-78718c59-5438-4a24-903a-033b4d2f4df1.svg)
